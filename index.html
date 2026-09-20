@@ -1,379 +1,601 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>DriveX | Mobilidade Urbana</title>
-
-  <meta name="description"
-        content="DriveX - Mobilidade urbana para passageiros e motoristas. Baixe o aplicativo e conheça a DriveX.">
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      color: #081b3a;
-      background: #ffffff;
-      line-height: 1.6;
-    }
-
-    /* CABEÇALHO */
-
-    header {
-      background: #061a3a;
-      padding: 18px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 3px 12px rgba(0,0,0,.15);
-    }
-
-    .logo {
-      color: white;
-      font-size: 30px;
-      font-weight: 800;
-      text-decoration: none;
-      letter-spacing: -1px;
-    }
-
-    .logo span {
-      color: #1597ff;
-    }
-
-    nav {
-      display: flex;
-      gap: 26px;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    nav a:hover {
-      color: #1597ff;
-    }
-
-    /* HERO */
-
-    .hero {
-      min-height: 650px;
-      padding: 100px 8%;
-      display: flex;
-      align-items: center;
-      background:
-        radial-gradient(circle at 80% 20%, #0c68b9 0, transparent 35%),
-        linear-gradient(135deg, #03132e, #082b59);
-      color: white;
-    }
-
-    .hero-content {
-      max-width: 700px;
-    }
-
-    .hero-tag {
-      display: inline-block;
-      padding: 8px 16px;
-      border: 1px solid #1597ff;
-      border-radius: 50px;
-      color: #65baff;
-      margin-bottom: 25px;
-      font-weight: 700;
-    }
-
-    .hero h1 {
-      font-size: clamp(42px, 7vw, 78px);
-      line-height: 1.05;
-      margin-bottom: 22px;
-    }
-
-    .hero h1 span {
-      color: #1597ff;
-    }
-
-    .hero p {
-      font-size: 21px;
-      color: #dcecff;
-      max-width: 620px;
-      margin-bottom: 35px;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 15px 24px;
-      border-radius: 9px;
-      text-decoration: none;
-      font-weight: 700;
-      transition: .2s;
-    }
-
-    .btn-primary {
-      background: #168cff;
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: #0877df;
-      transform: translateY(-2px);
-    }
-
-    .btn-outline {
-      border: 1px solid #5faeff;
-      color: white;
-    }
-
-    .btn-outline:hover {
-      background: rgba(255,255,255,.08);
-    }
-
-    /* SEÇÕES */
-
-    section {
-      padding: 90px 8%;
-    }
-
-    .section-title {
-      text-align: center;
-      max-width: 750px;
-      margin: 0 auto 55px;
-    }
-
-    .section-title span {
-      color: #168cff;
-      font-weight: 800;
-      text-transform: uppercase;
-      font-size: 14px;
-      letter-spacing: 1.5px;
-    }
-
-    .section-title h2 {
-      font-size: clamp(32px, 5vw, 48px);
-      margin-top: 8px;
-    }
-
-    .section-title p {
-      color: #66758a;
-      margin-top: 15px;
-      font-size: 18px;
-    }
-
-    /* CARDS */
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 28px;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .card {
-      border: 1px solid #e4eaf1;
-      border-radius: 18px;
-      padding: 38px;
-      background: white;
-      box-shadow: 0 10px 35px rgba(0,30,70,.07);
-    }
-
-    .card-icon {
-      font-size: 40px;
-      margin-bottom: 18px;
-    }
-
-    .card h3 {
-      font-size: 27px;
-      margin-bottom: 14px;
-    }
-
-    .card p {
-      color: #68778b;
-      margin-bottom: 24px;
-    }
-
-    /* BENEFÍCIOS */
-
-    .benefits {
-      background: #f5f9fd;
-    }
-
-    .benefit-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .benefit {
-      padding: 30px;
-      background: white;
-      border-radius: 14px;
-      border: 1px solid #e4edf6;
-    }
-
-    .benefit strong {
-      display: block;
-      font-size: 20px;
-      margin: 10px 0;
-    }
-
-    .benefit p {
-      color: #68778b;
-    }
-
-    /* DOWNLOAD */
-
-    .download {
-      background: linear-gradient(135deg, #061a3a, #0a3d73);
-      color: white;
-      text-align: center;
-    }
-
-    .download h2 {
-      font-size: clamp(34px, 5vw, 50px);
-      margin-bottom: 15px;
-    }
-
-    .download p {
-      color: #d4e7fb;
-      font-size: 18px;
-      margin-bottom: 35px;
-    }
-
-    .store-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-
-    .store {
-      background: #000;
-      color: white;
-      padding: 15px 26px;
-      min-width: 220px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: 700;
-      border: 1px solid #3e4c60;
-    }
-
-    .store:hover {
-      transform: translateY(-2px);
-    }
-
-    /* CONTATO */
-
-    .contact {
-      text-align: center;
-    }
-
-    .contact p {
-      max-width: 650px;
-      margin: 15px auto 30px;
-      color: #68778b;
-    }
-
-    /* RODAPÉ */
-
-    footer {
-      background: #031126;
-      color: #b8c7d9;
-      padding: 40px 8%;
-      text-align: center;
-    }
-
-    footer .footer-logo {
-      color: white;
-      font-size: 25px;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-
-    footer .footer-logo span {
-      color: #1597ff;
-    }
-
-    footer p {
-      font-size: 14px;
-    }
-
-    /* CELULAR */
-
-    @media (max-width: 800px) {
-
-      header {
-        padding: 16px 5%;
-      }
-
-      nav {
-        display: none;
-      }
-
-      .hero {
-        min-height: 590px;
-        padding: 80px 6%;
-      }
-
-      .hero p {
-        font-size: 18px;
-      }
-
-      section {
-        padding: 70px 6%;
-      }
-
-      .cards,
-      .benefit-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .btn {
-        width: 100%;
-        text-align: center;
-      }
-
-      .store {
-        width: 100%;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DriveX | Mobilidade Urbana de Alta Precisão</title>
+
+<meta name="description" content="DriveX - Mobilidade urbana para passageiros e motoristas. Baixe o aplicativo DriveX para Android e iPhone.">
+
+<style>
+
+:root{
+  --navy:#03152f;
+  --navy2:#062957;
+  --blue:#008cff;
+  --cyan:#00d9ff;
+  --orange:#ff8a00;
+  --light:#f5f9fd;
+  --text:#10213a;
+  --muted:#66758a;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:#fff;
+  line-height:1.6;
+}
+
+a{
+  text-decoration:none;
+}
+
+.container{
+  width:min(1180px,88%);
+  margin:auto;
+}
+
+/* CABEÇALHO */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(3,21,47,.96);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(10px);
+}
+
+.header-inner{
+  height:82px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:#fff;
+  font-size:25px;
+  font-weight:800;
+}
+
+.brand img{
+  width:58px;
+  height:58px;
+  object-fit:cover;
+  border-radius:50%;
+}
+
+.brand span{
+  color:var(--blue);
+}
+
+nav{
+  display:flex;
+  align-items:center;
+  gap:28px;
+}
+
+nav a{
+  color:#e8f3ff;
+  font-size:14px;
+  font-weight:700;
+}
+
+nav a:hover{
+  color:var(--cyan);
+}
+
+.nav-button{
+  background:var(--blue);
+  padding:11px 18px;
+  border-radius:8px;
+}
+
+/* HERO */
+
+.hero{
+  min-height:680px;
+  display:flex;
+  align-items:center;
+  background:
+    radial-gradient(circle at 80% 25%,rgba(0,140,255,.28),transparent 32%),
+    radial-gradient(circle at 65% 75%,rgba(255,138,0,.08),transparent 25%),
+    linear-gradient(135deg,#020d20,#052a57);
+  color:#fff;
+  overflow:hidden;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:70px;
+  align-items:center;
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 14px;
+  border:1px solid rgba(0,217,255,.55);
+  border-radius:30px;
+  color:#78eaff;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:1.2px;
+  margin-bottom:24px;
+}
+
+.hero h1{
+  font-size:clamp(46px,5.5vw,76px);
+  line-height:1.04;
+  letter-spacing:-2px;
+  max-width:700px;
+}
+
+.hero h1 span{
+  background:linear-gradient(90deg,var(--cyan),var(--blue));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero-text{
+  font-size:19px;
+  color:#cfe1f5;
+  max-width:610px;
+  margin:25px 0 34px;
+}
+
+.hero-buttons{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  min-height:52px;
+  padding:0 24px;
+  border-radius:9px;
+  font-weight:800;
+  transition:.2s ease;
+}
+
+.btn-primary{
+  background:linear-gradient(90deg,#008cff,#006ee6);
+  color:#fff;
+  box-shadow:0 8px 24px rgba(0,140,255,.28);
+}
+
+.btn-primary:hover{
+  transform:translateY(-2px);
+}
+
+.btn-secondary{
+  color:#fff;
+  border:1px solid rgba(255,255,255,.35);
+}
+
+.btn-secondary:hover{
+  background:rgba(255,255,255,.08);
+}
+
+.hero-logo{
+  display:flex;
+  justify-content:center;
+  position:relative;
+}
+
+.hero-logo:before{
+  content:"";
+  position:absolute;
+  width:440px;
+  height:440px;
+  border-radius:50%;
+  background:#008cff;
+  filter:blur(100px);
+  opacity:.17;
+}
+
+.hero-logo img{
+  position:relative;
+  width:min(100%,480px);
+  border-radius:50%;
+  filter:drop-shadow(0 30px 45px rgba(0,0,0,.45));
+}
+
+/* SEÇÕES */
+
+section{
+  padding:100px 0;
+}
+
+.section-heading{
+  max-width:720px;
+  margin:0 auto 55px;
+  text-align:center;
+}
+
+.section-heading small{
+  display:block;
+  color:var(--blue);
+  font-weight:900;
+  letter-spacing:1.4px;
+  margin-bottom:8px;
+}
+
+.section-heading h2{
+  font-size:clamp(34px,4vw,48px);
+  line-height:1.15;
+}
+
+.section-heading p{
+  margin-top:16px;
+  color:var(--muted);
+  font-size:17px;
+}
+
+/* PASSAGEIRO / MOTORISTA */
+
+.audiences{
+  background:#fff;
+}
+
+.audience-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:28px;
+}
+
+.audience-card{
+  padding:45px;
+  border:1px solid #e2eaf3;
+  border-radius:22px;
+  box-shadow:0 14px 45px rgba(0,35,80,.07);
+  position:relative;
+  overflow:hidden;
+}
+
+.audience-card:before{
+  content:"";
+  position:absolute;
+  width:170px;
+  height:170px;
+  right:-70px;
+  top:-70px;
+  border-radius:50%;
+  background:#eaf6ff;
+}
+
+.icon{
+  width:58px;
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:15px;
+  background:#eaf6ff;
+  font-size:29px;
+  margin-bottom:25px;
+}
+
+.audience-card h3{
+  font-size:29px;
+  margin-bottom:12px;
+}
+
+.audience-card p{
+  color:var(--muted);
+  margin-bottom:26px;
+  max-width:470px;
+}
+
+/* DIFERENCIAIS */
+
+.benefits{
+  background:var(--light);
+}
+
+.benefit-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+
+.benefit-card{
+  background:#fff;
+  padding:34px;
+  border:1px solid #e4edf6;
+  border-radius:17px;
+}
+
+.benefit-card .icon{
+  margin-bottom:18px;
+}
+
+.benefit-card h3{
+  font-size:21px;
+  margin-bottom:8px;
+}
+
+.benefit-card p{
+  color:var(--muted);
+}
+
+/* DOWNLOAD */
+
+.download{
+  background:
+    radial-gradient(circle at 20% 20%,rgba(0,217,255,.12),transparent 28%),
+    linear-gradient(135deg,#021126,#073a73);
+  color:#fff;
+}
+
+.download-box{
+  text-align:center;
+  max-width:850px;
+  margin:auto;
+}
+
+.download-logo{
+  width:125px;
+  height:125px;
+  object-fit:cover;
+  border-radius:50%;
+  margin-bottom:25px;
+  box-shadow:0 20px 50px rgba(0,0,0,.3);
+}
+
+.download h2{
+  font-size:clamp(36px,4.5vw,52px);
+  margin-bottom:15px;
+}
+
+.download p{
+  color:#cfe2f7;
+  font-size:18px;
+  max-width:650px;
+  margin:0 auto 35px;
+}
+
+.store-buttons{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.store{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-width:235px;
+  min-height:64px;
+  background:#000;
+  color:#fff;
+  border:1px solid #4c5c70;
+  border-radius:11px;
+  font-size:18px;
+  font-weight:800;
+  transition:.2s;
+}
+
+.store:hover{
+  transform:translateY(-3px);
+}
+
+/* CONTATO */
+
+.contact{
+  text-align:center;
+}
+
+.contact-box{
+  max-width:800px;
+  margin:auto;
+  padding:55px;
+  border:1px solid #e2eaf3;
+  border-radius:22px;
+  background:#fff;
+  box-shadow:0 14px 45px rgba(0,35,80,.06);
+}
+
+.contact-box h2{
+  font-size:38px;
+  margin-bottom:14px;
+}
+
+.contact-box p{
+  color:var(--muted);
+  margin-bottom:25px;
+}
+
+/* FOOTER */
+
+footer{
+  background:#020c1c;
+  color:#aebed0;
+  padding:50px 0;
+}
+
+.footer-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:30px;
+}
+
+.footer-brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.footer-brand img{
+  width:52px;
+  height:52px;
+  object-fit:cover;
+  border-radius:50%;
+}
+
+.footer-brand strong{
+  color:#fff;
+  font-size:21px;
+}
+
+.footer-copy{
+  font-size:13px;
+  text-align:right;
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+  .container{
+    width:min(92%,680px);
+  }
+
+  .header-inner{
+    height:70px;
+  }
+
+  .brand img{
+    width:48px;
+    height:48px;
+  }
+
+  nav a:not(.nav-button){
+    display:none;
+  }
+
+  .hero{
+    min-height:auto;
+    padding:70px 0 80px;
+  }
+
+  .hero-grid{
+    grid-template-columns:1fr;
+    gap:45px;
+  }
+
+  .hero-content{
+    text-align:center;
+  }
+
+  .hero h1{
+    letter-spacing:-1px;
+  }
+
+  .hero-text{
+    margin:22px auto 30px;
+  }
+
+  .hero-buttons{
+    justify-content:center;
+  }
+
+  .hero-logo img{
+    width:min(82%,380px);
+  }
+
+  section{
+    padding:75px 0;
+  }
+
+  .audience-grid,
+  .benefit-grid{
+    grid-template-columns:1fr;
+  }
+
+  .audience-card{
+    padding:32px;
+  }
+
+  .footer-inner{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .footer-copy{
+    text-align:center;
+  }
+
+}
+
+@media(max-width:520px){
+
+  .brand{
+    font-size:20px;
+  }
+
+  .nav-button{
+    padding:9px 13px;
+    font-size:12px;
+  }
+
+  .hero h1{
+    font-size:44px;
+  }
+
+  .hero-buttons .btn{
+    width:100%;
+  }
+
+  .audience-card{
+    padding:28px 23px;
+  }
+
+  .store{
+    width:100%;
+  }
+
+  .contact-box{
+    padding:38px 23px;
+  }
+
+}
+
+</style>
 </head>
 
 <body>
 
 <header>
-  <a href="#" class="logo">Drive<span>X</span></a>
+<div class="container header-inner">
 
-  <nav>
-    <a href="#inicio">Início</a>
-    <a href="#publicos">Passageiros</a>
-    <a href="#publicos">Motoristas</a>
-    <a href="#beneficios">Por que DriveX?</a>
-    <a href="#baixar">Baixar App</a>
-  </nav>
+<a href="#inicio" class="brand">
+<img src="Logotipo%20da%20DriveX.png" alt="DriveX">
+Drive<span>X</span>
+</a>
+
+<nav>
+<a href="#inicio">Início</a>
+<a href="#passageiros">Passageiros</a>
+<a href="#motoristas">Motoristas</a>
+<a href="#beneficios">DriveX</a>
+<a href="#baixar" class="nav-button">Baixar App</a>
+</nav>
+
+</div>
 </header>
 
 
@@ -381,183 +603,244 @@
 
 <section class="hero" id="inicio">
 
-  <div class="hero-content">
+<div class="container hero-grid">
 
-    <div class="hero-tag">
-      MOBILIDADE URBANA
-    </div>
+<div class="hero-content">
 
-    <h1>
-      Seu destino,<br>
-      <span>nossa prioridade.</span>
-    </h1>
+<div class="eyebrow">
+MOBILIDADE URBANA DE ALTA PRECISÃO
+</div>
 
-    <p>
-      Uma nova experiência em mobilidade urbana.
-      Conectando passageiros e motoristas de forma
-      simples, prática e eficiente.
-    </p>
+<h1>
+Seu destino,<br>
+<span>nossa prioridade.</span>
+</h1>
 
-    <div class="buttons">
+<p class="hero-text">
+Uma nova alternativa em mobilidade urbana para conectar
+passageiros e motoristas de forma simples, prática e eficiente.
+Tenha a DriveX no seu celular.
+</p>
 
-      <a href="#baixar" class="btn btn-primary">
-        Baixar app para passageiros
-      </a>
+<div class="hero-buttons">
 
-      <a href="#motoristas" class="btn btn-outline">
-        Seja motorista parceiro
-      </a>
+<a href="#baixar" class="btn btn-primary">
+Baixar o DriveX
+</a>
 
-    </div>
+<a href="#motoristas" class="btn btn-secondary">
+Quero ser motorista
+</a>
 
-  </div>
+</div>
 
+</div>
+
+
+<div class="hero-logo">
+<img src="Logotipo%20da%20DriveX.png"
+     alt="Logotipo oficial DriveX">
+</div>
+
+</div>
 </section>
 
 
-<section id="publicos">
+<section class="audiences">
 
-  <div class="section-title">
-    <span>DriveX para todos</span>
-    <h2>Mobilidade para quem viaja e para quem dirige</h2>
-    <p>
-      Conheça as soluções DriveX para passageiros e motoristas parceiros.
-    </p>
-  </div>
+<div class="container">
 
+<div class="section-heading">
 
-  <div class="cards">
+<small>DRIVEX PARA VOCÊ</small>
 
-    <div class="card">
+<h2>
+Uma plataforma para passageiros e motoristas
+</h2>
 
-      <div class="card-icon">📱</div>
+<p>
+Escolha como você deseja fazer parte da DriveX.
+</p>
 
-      <h3>Para passageiros</h3>
-
-      <p>
-        Tenha o DriveX no seu celular e encontre uma nova opção
-        para seus deslocamentos do dia a dia.
-      </p>
-
-      <a href="#baixar" class="btn btn-primary">
-        Baixar aplicativo
-      </a>
-
-    </div>
+</div>
 
 
-    <div class="card" id="motoristas">
+<div class="audience-grid">
 
-      <div class="card-icon">🚘</div>
+<article class="audience-card" id="passageiros">
 
-      <h3>Para motoristas</h3>
+<div class="icon">📱</div>
 
-      <p>
-        Faça parte da DriveX como motorista parceiro e conheça
-        uma nova alternativa para trabalhar com mobilidade urbana.
-      </p>
+<h3>Sou passageiro</h3>
 
-      <a href="#contato" class="btn btn-primary">
-        Quero ser motorista
-      </a>
+<p>
+Baixe o aplicativo DriveX e tenha uma nova opção
+de mobilidade para seus deslocamentos.
+</p>
 
-    </div>
+<a href="#baixar" class="btn btn-primary">
+Baixar aplicativo
+</a>
 
-  </div>
+</article>
 
+
+<article class="audience-card" id="motoristas">
+
+<div class="icon">🚘</div>
+
+<h3>Sou motorista</h3>
+
+<p>
+Conheça a DriveX e descubra uma nova alternativa
+para trabalhar como motorista parceiro.
+</p>
+
+<a href="#contato" class="btn btn-primary">
+Quero ser parceiro
+</a>
+
+</article>
+
+</div>
+</div>
 </section>
 
 
 <section class="benefits" id="beneficios">
 
-  <div class="section-title">
-    <span>Por que DriveX?</span>
-    <h2>Uma nova opção em mobilidade urbana</h2>
-  </div>
+<div class="container">
+
+<div class="section-heading">
+
+<small>CONHEÇA A DRIVEX</small>
+
+<h2>
+Mobilidade urbana pensada para o seu dia
+</h2>
+
+<p>
+Tecnologia, praticidade e uma nova experiência
+para quem precisa se deslocar e para quem dirige.
+</p>
+
+</div>
 
 
-  <div class="benefit-grid">
+<div class="benefit-grid">
 
-    <div class="benefit">
-      <div>📍</div>
-      <strong>Praticidade</strong>
-      <p>
-        Solicite suas viagens diretamente pelo aplicativo DriveX.
-      </p>
-    </div>
+<div class="benefit-card">
 
-    <div class="benefit">
-      <div>🛡️</div>
-      <strong>Segurança</strong>
-      <p>
-        Mobilidade pensada para proporcionar uma experiência
-        mais tranquila para passageiros e motoristas.
-      </p>
-    </div>
+<div class="icon">📍</div>
 
-    <div class="benefit">
-      <div>🤝</div>
-      <strong>Parceria</strong>
-      <p>
-        Aproximamos passageiros e motoristas através
-        de uma plataforma moderna de mobilidade.
-      </p>
-    </div>
+<h3>Praticidade</h3>
 
-  </div>
+<p>
+Acesse o aplicativo pelo seu celular e utilize
+os recursos disponíveis para suas viagens.
+</p>
 
+</div>
+
+
+<div class="benefit-card">
+
+<div class="icon">🛡️</div>
+
+<h3>Segurança</h3>
+
+<p>
+Uma experiência de mobilidade pensada para
+passageiros e motoristas parceiros.
+</p>
+
+</div>
+
+
+<div class="benefit-card">
+
+<div class="icon">🤝</div>
+
+<h3>Conexão</h3>
+
+<p>
+A DriveX aproxima passageiros e motoristas
+através de uma plataforma de mobilidade urbana.
+</p>
+
+</div>
+
+</div>
+</div>
 </section>
 
 
 <section class="download" id="baixar">
 
-  <h2>Baixe o aplicativo DriveX</h2>
+<div class="container download-box">
 
-  <p>
-    Escolha a loja do seu celular e acesse diretamente
-    a página oficial do aplicativo.
-  </p>
+<img
+src="Logotipo%20da%20DriveX.png"
+class="download-logo"
+alt="DriveX">
 
+<h2>
+Tenha a DriveX no seu celular
+</h2>
 
-  <div class="store-buttons">
-
-    <a
-      class="store"
-      href="https://play.google.com/store/apps/details?id=com.app.prrvkudrivex"
-      target="_blank"
-      rel="noopener">
-      ▶ Google Play
-    </a>
+<p>
+Escolha o sistema do seu aparelho para acessar diretamente
+a página oficial do aplicativo DriveX.
+</p>
 
 
-    <a
-      class="store"
-      href="https://apps.apple.com/br/app/drivex-passageiros/id6801130842"
-      target="_blank"
-      rel="noopener">
-       App Store
-    </a>
+<div class="store-buttons">
 
-  </div>
+<a
+href="https://play.google.com/store/apps/details?id=com.app.prrvkudrivex"
+target="_blank"
+rel="noopener noreferrer"
+class="store">
+▶ &nbsp; Google Play
+</a>
 
+
+<a
+href="https://apps.apple.com/br/app/drivex-passageiros/id6801130842"
+target="_blank"
+rel="noopener noreferrer"
+class="store">
+ &nbsp; App Store
+</a>
+
+</div>
+
+</div>
 </section>
 
 
 <section class="contact" id="contato">
 
-  <div class="section-title">
+<div class="container">
 
-    <span>DriveX</span>
+<div class="contact-box">
 
-    <h2>Quer fazer parte?</h2>
+<h2>
+Quer fazer parte da DriveX?
+</h2>
 
-    <p>
-      Acompanhe a DriveX e conheça nossas novidades,
-      oportunidades para motoristas e informações para passageiros.
-    </p>
+<p>
+Acompanhe nossas novidades e conheça as oportunidades
+para passageiros e motoristas parceiros.
+</p>
 
-  </div>
+<a href="#baixar" class="btn btn-primary">
+Conhecer o aplicativo
+</a>
 
+</div>
+
+</div>
 </section>
 
 </main>
@@ -565,17 +848,30 @@
 
 <footer>
 
-  <div class="footer-logo">
-    Drive<span>X</span>
-  </div>
+<div class="container footer-inner">
 
-  <p>
-    Seu destino, nossa prioridade.
-  </p>
+<div class="footer-brand">
 
-  <p>
-    © 2026 DriveX. Todos os direitos reservados.
-  </p>
+<img
+src="Logotipo%20da%20DriveX.png"
+alt="DriveX">
+
+<div>
+<strong>DriveX</strong><br>
+Mobilidade urbana de alta precisão
+</div>
+
+</div>
+
+
+<div class="footer-copy">
+
+Seu destino, nossa prioridade.<br>
+© 2026 DriveX. Todos os direitos reservados.
+
+</div>
+
+</div>
 
 </footer>
 
