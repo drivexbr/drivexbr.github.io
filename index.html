@@ -644,7 +644,11 @@ footer{
 }
 
 /* MOBILE */
+/* BARRA MOBILE */
 
+.mobile-action-bar{
+  display:none;
+}
 @media(max-width:900px){
 
   .container{
@@ -751,7 +755,7 @@ footer{
 @media(max-width:540px){
 
   .hero{
-    padding-top:55px;
+    padding:48px 0 52px;
   }
 
   .hero h1{
@@ -801,8 +805,107 @@ footer{
     flex-direction:column;
   }
 
-}
+    .hero-grid{
+    gap:30px;
+  }
 
+  .hero-logo{
+    width:min(66%,280px);
+  }
+
+  .eyebrow{
+    margin-bottom:18px;
+    font-size:10px;
+  }
+
+  .quick-item{
+    min-height:48px;
+    padding:9px 12px;
+    font-size:13px;
+  }
+
+  .quick-icon{
+    width:30px;
+    height:30px;
+  }
+
+  .quick-icon svg{
+    width:22px;
+    height:22px;
+  }
+
+    .nav-download{
+    font-size:0;
+    padding:9px 15px;
+  }
+
+  .nav-download::after{
+    content:"Baixar";
+    font-size:12px;
+  }
+
+}
+  body{
+    padding-bottom:72px;
+  }
+
+  .mobile-action-bar{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:2000;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    background:#03152f;
+    border-top:1px solid rgba(255,255,255,.14);
+    box-shadow:0 -8px 30px rgba(0,0,0,.18);
+  }
+
+  .mobile-action{
+    min-height:68px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    color:#fff;
+    padding:8px 10px;
+  }
+
+  .mobile-action + .mobile-action{
+    border-left:1px solid rgba(255,255,255,.15);
+  }
+
+  .mobile-action svg{
+    width:23px;
+    height:23px;
+    flex:0 0 auto;
+  }
+
+  .mobile-action span{
+    display:flex;
+    flex-direction:column;
+    line-height:1.15;
+  }
+
+  .mobile-action small{
+    font-size:8px;
+    font-weight:700;
+    color:#a9c5df;
+    letter-spacing:.5px;
+  }
+
+  .mobile-action strong{
+    font-size:13px;
+  }
+
+  .passenger-action{
+    background:#078cff;
+  }
+
+  .driver-action{
+    background:#03152f;
+  }
 </style>
 </head>
 
@@ -1211,7 +1314,7 @@ href="https://play.google.com/store/apps/details?id=com.app.prrvkudrivex"
 target="_blank"
 rel="noopener noreferrer"
 class="btn btn-primary">
-Baixar para Android
+Baixar app para motorista
 </a>
 
 </div>
@@ -1295,6 +1398,35 @@ Seu destino, nossa prioridade.
 </div>
 
 </footer>
+<div class="mobile-action-bar">
 
+<a href="#baixar" class="mobile-action passenger-action">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+<rect x="6" y="2" width="12" height="20" rx="2"></rect>
+<path d="M10 18h4"></path>
+</svg>
+
+<span>
+<small>QUERO VIAJAR</small>
+<strong>Passageiro</strong>
+</span>
+</a>
+
+<a href="#baixar-motorista" class="mobile-action driver-action">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+<path d="M5 17h14"></path>
+<path d="M6 17l1-6h10l1 6"></path>
+<path d="M8 11l1.5-4h5L16 11"></path>
+<circle cx="8" cy="18" r="1.5"></circle>
+<circle cx="16" cy="18" r="1.5"></circle>
+</svg>
+
+<span>
+<small>QUERO DIRIGIR</small>
+<strong>Motorista</strong>
+</span>
+</a>
+
+</div>
 </body>
 </html>
