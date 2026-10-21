@@ -673,8 +673,171 @@ Voltar para o site DriveX
 Seu destino, nossa prioridade.<br><br>
 
 © 2026 DriveX. Todos os direitos reservados.
+  <br><br>
+
+<button
+  type="button"
+  id="drivex-privacy-settings"
+  style="
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.45);
+    border-radius: 8px;
+    color: inherit;
+    padding: 10px 16px;
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+  "
+>
+  Configurações de privacidade
+</button>
 
 </footer>
+<!-- Painel de consentimento de cookies - DriveX -->
+<div
+  id="drivex-cookie-banner"
+  role="region"
+  aria-label="Preferências de privacidade"
+  hidden
+  style="
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    max-width: 520px;
+    margin: auto;
+    padding: 20px;
+    background: #03152f;
+    color: #ffffff;
+    border: 1px solid #078cff;
+    border-radius: 14px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+    z-index: 9999;
+    font-family: Arial, sans-serif;
+  "
+>
+  <strong style="font-size: 18px;">
+    Sua privacidade é importante
+  </strong>
 
+  <p style="font-size: 14px; line-height: 1.6;">
+    Utilizamos cookies analíticos opcionais para entender
+    como nosso site é utilizado e melhorar sua experiência.
+    Você pode aceitar ou recusar essa coleta.
+  </p>
+
+  <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+
+    <button
+      type="button"
+      id="drivex-cookie-accept"
+      style="
+        background: #078cff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 20px;
+        cursor: pointer;
+        font-weight: bold;
+      "
+    >
+      Aceitar
+    </button>
+
+    <button
+      type="button"
+      id="drivex-cookie-reject"
+      style="
+        background: transparent;
+        color: white;
+        border: 1px solid #ffffff;
+        border-radius: 8px;
+        padding: 12px 20px;
+        cursor: pointer;
+      "
+    >
+      Recusar
+    </button>
+
+  </div>
+</div>
+  <script>
+(function () {
+  const banner = document.getElementById('drivex-cookie-banner');
+  const accept = document.getElementById('drivex-cookie-accept');
+  const reject = document.getElementById('drivex-cookie-reject');
+  const settings = document.getElementById('drivex-privacy-settings');
+  const KEY = 'drivex_cookie_consent';
+
+  if (!banner || !accept || !reject || !settings) return;
+
+  function getConsent() {
+    try {
+      return localStorage.getItem(KEY);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function saveConsent(value) {
+    try {
+      localStorage.setItem(KEY, value);
+    } catch (e) {
+      // A escolha será aplicada somente nesta página.
+    }
+  }
+
+  function removeAnalyticsCookies() {
+    document.cookie.split(';').forEach(function (cookie) {
+      const name = cookie.split('=')[0].trim();
+
+      if (name === '_ga' || name.startsWith('_ga_')) {
+        document.cookie =
+          name + '=; Max-Age=0; path=/; SameSite=Lax';
+
+        document.cookie =
+          name + '=; Max-Age=0; path=/; domain=.drivexapp.com.br; SameSite=Lax';
+      }
+    });
+  }
+
+  function applyConsent(value) {
+    saveConsent(value);
+
+    if (value === 'accepted') {
+      if (typeof ativarAnalyticsDriveX === 'function') {
+        ativarAnalyticsDriveX();
+      }
+    } else {
+      removeAnalyticsCookies();
+
+      // Recarrega para interromper a tag anteriormente carregada.
+      if (window.drivexAnalyticsAtivo) {
+        window.location.reload();
+        return;
+      }
+    }
+
+    banner.hidden = true;
+  }
+
+  accept.addEventListener('click', function () {
+    applyConsent('accepted');
+  });
+
+  reject.addEventListener('click', function () {
+    applyConsent('rejected');
+  });
+
+  settings.addEventListener('click', function () {
+    banner.hidden = false;
+  });
+
+  if (getConsent() !== 'accepted' &&
+      getConsent() !== 'rejected') {
+    banner.hidden = false;
+  }
+})();
+</script>
 </body>
 </html>
