@@ -1,15 +1,52 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <!-- Google Analytics 4 - DriveX -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K32YXWSXS6"></script>
+<!-- Google Analytics 4 - DriveX: carregamento condicionado ao consentimento -->
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  const DRIVEX_GA_ID = 'G-K32YXWSXS6';
 
-  gtag('config', 'G-K32YXWSXS6');
+  function ativarAnalyticsDriveX() {
+    if (window.drivexAnalyticsAtivo) return;
+
+    window.drivexAnalyticsAtivo = true;
+    window.dataLayer = window.dataLayer || [];
+
+    window.gtag = function() {
+      dataLayer.push(arguments);
+    };
+
+    gtag('js', new Date());
+    gtag('config', DRIVEX_GA_ID);
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.src =
+      'https://www.googletagmanager.com/gtag/js?id=' +
+      DRIVEX_GA_ID;
+
+    document.head.appendChild(script);
+  }
+
+  function desativarAnalyticsDriveX() {
+    if (typeof window.gtag === 'function') {
+      gtag('consent', 'update', {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
+    }
+  }
+
+try {
+  if (localStorage.getItem('drivex_cookie_consent') === 'accepted') {
+    ativarAnalyticsDriveX();
+  }
+} catch (e) {
+  // Se o armazenamento estiver indisponível, não ativar o Analytics.
+}
 </script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -1437,5 +1474,199 @@ Seu destino, nossa prioridade.
 </a>
 
 </div>
+<!-- DriveX - Painel de consentimento -->
+<style>
+  #drivex-cookie-banner {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    z-index: 99999;
+    max-width: 900px;
+    margin: auto;
+    padding: 22px;
+    background: #03152f;
+    color: #ffffff;
+    border: 1px solid #078cff;
+    border-radius: 14px;
+    box-shadow: 0 8px 35px rgba(0,0,0,.35);
+    font-family: Arial, sans-serif;
+  }
+
+  #drivex-cookie-banner[hidden] {
+    display: none;
+  }
+
+  #drivex-cookie-banner h3 {
+    margin: 0 0 10px;
+    color: #ffffff;
+    font-size: 19px;
+  }
+
+  #drivex-cookie-banner p {
+    margin: 0 0 16px;
+    color: #e1eaf3;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .drivex-cookie-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .drivex-cookie-actions button {
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  #drivex-cookie-accept {
+    background: #078cff;
+    color: white;
+    border: 1px solid #078cff;
+  }
+
+  #drivex-cookie-reject {
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+  }
+
+  #drivex-cookie-settings {
+    position: fixed;
+    left: 12px;
+    bottom: 85px;
+    z-index: 99998;
+    background: #03152f;
+    color: white;
+    border: 1px solid #078cff;
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 540px) {
+    #drivex-cookie-banner {
+      bottom: 85px;
+      padding: 16px;
+    }
+
+    #drivex-cookie-settings {
+      bottom: 85px;
+    }
+  }
+</style>
+
+<div id="drivex-cookie-banner" hidden
+     role="region"
+     aria-label="Preferências de privacidade">
+
+  <h3>🔒 Sua privacidade é importante</h3>
+
+  <p>
+    A DriveX utiliza dados analíticos opcionais para entender
+    como os visitantes utilizam nosso site e melhorar sua experiência.
+    Você pode aceitar ou recusar essa coleta.
+  </p>
+
+  <div class="drivex-cookie-actions">
+    <button type="button" id="drivex-cookie-accept">
+      Aceitar
+    </button>
+
+    <button type="button" id="drivex-cookie-reject">
+      Recusar
+    </button>
+  </div>
+</div>
+
+<button type="button" id="drivex-cookie-settings">
+  ⚙ Privacidade
+</button>
+
+<script>
+(function () {
+  const KEY = 'drivex_cookie_consent';
+
+  const banner = document.getElementById('drivex-cookie-banner');
+  const accept = document.getElementById('drivex-cookie-accept');
+  const reject = document.getElementById('drivex-cookie-reject');
+  const settings = document.getElementById('drivex-cookie-settings');
+
+  function getConsent() {
+    try {
+      return localStorage.getItem(KEY);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function saveConsent(value) {
+    try {
+      localStorage.setItem(KEY, value);
+    } catch (e) {
+      // Sem armazenamento disponível, a escolha vale nesta página.
+    }
+  }
+
+ function applyConsent(value) {
+  saveConsent(value);
+
+  if (value === 'accepted') {
+    if (typeof ativarAnalyticsDriveX === 'function') {
+      ativarAnalyticsDriveX();
+    }
+  } else {
+    if (typeof desativarAnalyticsDriveX === 'function') {
+      desativarAnalyticsDriveX();
+    }
+
+    // Remove cookies comuns do Google Analytics neste domínio.
+    const cookies = document.cookie.split(';');
+
+    cookies.forEach(function(cookie) {
+      const name = cookie.split('=')[0].trim();
+
+      if (name === '_ga' || name.startsWith('_ga_')) {
+        document.cookie =
+          name + '=; Max-Age=0; path=/; SameSite=Lax';
+
+        document.cookie =
+          name + '=; Max-Age=0; path=/; domain=.drivexapp.com.br; SameSite=Lax';
+      }
+    });
+
+    // Interrompe a execução da tag anteriormente carregada.
+    if (window.drivexAnalyticsAtivo) {
+      window.location.reload();
+      return;
+    }
+  }
+
+  banner.hidden = true;
+}
+
+  accept.addEventListener('click', function () {
+    applyConsent('accepted');
+  });
+
+  reject.addEventListener('click', function () {
+    applyConsent('rejected');
+  });
+
+  settings.addEventListener('click', function () {
+    banner.hidden = false;
+  });
+
+  if (getConsent() !== 'accepted' &&
+      getConsent() !== 'rejected') {
+    banner.hidden = false;
+  }
+})();
+</script>
 </body>
 </html>
