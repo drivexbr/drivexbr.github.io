@@ -1,14 +1,39 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <!-- Google Analytics 4 - DriveX -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K32YXWSXS6"></script>
+<!-- Google Analytics 4 - DriveX: carregamento condicionado ao consentimento -->
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  const DRIVEX_GA_ID = 'G-K32YXWSXS6';
 
-  gtag('config', 'G-K32YXWSXS6');
+  function ativarAnalyticsDriveX() {
+    if (window.drivexAnalyticsAtivo) return;
+
+    window.drivexAnalyticsAtivo = true;
+    window.dataLayer = window.dataLayer || [];
+
+    window.gtag = function() {
+      window.dataLayer.push(arguments);
+    };
+
+    gtag('js', new Date());
+    gtag('config', DRIVEX_GA_ID);
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.src =
+      'https://www.googletagmanager.com/gtag/js?id=' +
+      DRIVEX_GA_ID;
+
+    document.head.appendChild(script);
+  }
+
+  try {
+    if (localStorage.getItem('drivex_cookie_consent') === 'accepted') {
+      ativarAnalyticsDriveX();
+    }
+  } catch (e) {
+    // Sem acesso ao armazenamento, não carregar o Analytics.
+  }
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
